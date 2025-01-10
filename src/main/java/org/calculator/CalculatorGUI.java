@@ -6,11 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CalculatorGUI {
-    private JFrame frame;
-    private JTextField textField;
+    private final JTextField textField;
 
     public CalculatorGUI() {
-        frame = new JFrame("Calculator");
+        JFrame frame = new JFrame("Calculator");
         textField = new JTextField();
 
         // Set up the frame
@@ -47,7 +46,7 @@ public class CalculatorGUI {
     }
 
     private class ButtonClickListener implements ActionListener {
-        private Calculator calculator = new Calculator();
+        private final Calculator calculator = new Calculator();
         private String operator;
         private double result;
 
@@ -77,7 +76,7 @@ public class CalculatorGUI {
             } else { // Handle operator buttons SEPARATELY
                 try {
                     double operand = Double.parseDouble(textField.getText());
-                    if (operator != null) {
+                    if (operator!=null) {
                         result = calculate(result, operand, operator);
                     } else {
                         result = operand;
@@ -91,18 +90,13 @@ public class CalculatorGUI {
         }
 
         private double calculate(double firstOperand, double secondOperand, @org.jetbrains.annotations.NotNull String operator) {
-            switch (operator) {
-                case "+":
-                    return calculator.add(firstOperand, secondOperand);
-                case "-":
-                    return calculator.subtract(firstOperand, secondOperand);
-                case "*":
-                    return calculator.multiply(firstOperand, secondOperand);
-                case "/":
-                    return calculator.divide(firstOperand, secondOperand);
-                default:
-                    throw new IllegalArgumentException("Invalid operator: " + operator);
-            }
+            return switch (operator) {
+                case "+" -> calculator.add(firstOperand, secondOperand);
+                case "-" -> calculator.subtract(firstOperand, secondOperand);
+                case "*" -> calculator.multiply(firstOperand, secondOperand);
+                case "/" -> calculator.divide(firstOperand, secondOperand);
+                default -> throw new IllegalArgumentException("Invalid operator: " + operator);
+            };
         }
     }
 }
