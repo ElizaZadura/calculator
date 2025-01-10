@@ -42,17 +42,67 @@ public class CalculatorGUI {
         frame.setVisible(true);
     }
 
+    public static void main(String[] args) {
+        new CalculatorGUI();
+    }
+
     private class ButtonClickListener implements ActionListener {
+        private Calculator calculator = new Calculator();
+        private String operator;
+        private double result;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            // Handle button clicks here
-            // For simplicity, just display the button text in the text field
-            textField.setText(command);
-        }
-    }
 
-    public static void main(String[] args) {
-        new CalculatorGUI();
+            if (command.charAt(0) >= '0' && command.charAt(0) <= '9') {
+                // If the button pressed is a number, append it to the text field
+                textField.setText(textField.getText() + command);
+            } else if (command.equals("C")) {
+                // Clear the text field and reset operator and result
+                textField.setText("");
+                operator = null;
+                result = 0;
+            } else if (command.equals("=")) {
+                // Perform the final calculation
+                try {
+                    double operand = Double.parseDouble(textField.getText());
+                    result = calculate(result, operand, operator);
+                    textField.setText(String.valueOf(result));
+                } catch (NumberFormatException ex) {
+                    textField.setText("Error: Invalid input");
+                } catch (ArithmeticException ex) {
+                    textField.setText("Error: " + ex.getMessage());
+                }
+            } else { // Handle operator buttons SEPARATELY
+                try {
+                    double operand = Double.parseDouble(textField.getText());
+                    if (operator != null) {
+                        result = calculate(result, operand, operator);
+                    } else {
+                        result = operand;
+                    }
+                    operator = command;
+                    textField.setText("");
+                } catch (NumberFormatException ex) {
+                    textField.setText("Error: Invalid input");
+                }
+            }
+        }
+
+        private double calculate(double firstOperand, double secondOperand, @org.jetbrains.annotations.NotNull String operator) {
+            switch (operator) {
+                case "+":
+                    return calculator.add(firstOperand, secondOperand);
+                case "-":
+                    return calculator.subtract(firstOperand, secondOperand);
+                case "*":
+                    return calculator.multiply(firstOperand, secondOperand);
+                case "/":
+                    return calculator.divide(firstOperand, secondOperand);
+                default:
+                    throw new IllegalArgumentException("Invalid operator: " + operator);
+            }
+        }
     }
 }
