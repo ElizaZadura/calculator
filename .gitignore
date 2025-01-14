@@ -3,6 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+C:\Dev\Lexicon\Exercises\Java\Workshop-calculator\calculator\src\main\java\temp.java
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
