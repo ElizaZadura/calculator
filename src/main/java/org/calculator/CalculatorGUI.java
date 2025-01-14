@@ -71,20 +71,13 @@ public class CalculatorGUI {
                     double result = 0;
 
                     if (operator != null) { // Ensure operator is not null
-                        switch (operator) {
-                            case "+":
-                                result = calculator.add(firstOperand, secondOperand);
-                                break;
-                            case "-":
-                                result = calculator.subtract(firstOperand, secondOperand);
-                                break;
-                            case "*":
-                                result = calculator.multiply(firstOperand, secondOperand);
-                                break;
-                            case "/":
-                                result = calculator.divide(firstOperand, secondOperand);
-                                break;
-                        }
+                        result = switch (operator) {
+                            case "+" -> calculator.add(firstOperand, secondOperand);
+                            case "-" -> calculator.subtract(firstOperand, secondOperand);
+                            case "*" -> calculator.multiply(firstOperand, secondOperand);
+                            case "/" -> calculator.divide(firstOperand, secondOperand);
+                            default -> result;
+                        };
                         textField.setText(String.valueOf(result));
                         expressionBuilder.append(" = ").append(result); // Append result to expression
                     } else {
