@@ -87,11 +87,6 @@ public class CalculatorGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            System.out.println("Button pressed: " + command);
-
-/*            double result = 0;
-            double firstOperand = 0;
-            double secondOperand=0;*/
 
             if (command.charAt(0) >= '0' && command.charAt(0) <= '9') {
                 // If the button pressed is a number, append it to the text field
@@ -104,7 +99,6 @@ public class CalculatorGUI {
                     } catch (NumberFormatException ex) {
                         throw new RuntimeException(ex);
                     }
-                    System.out.println("First Operand: " + firstOperand);
                 } else  {
                     try {
                         secondOperand = Double.parseDouble(textField.getText());
@@ -120,7 +114,6 @@ public class CalculatorGUI {
                 textField.setText("");
                 operator = null;
                 result = 0;
-                System.out.println("All values cleared");
 
             } else if (command.equals("=")) {
                 // Perform the final calculation
@@ -128,7 +121,6 @@ public class CalculatorGUI {
                     secondOperand = Double.parseDouble(textField.getText());
                     result = calculate(firstOperand, secondOperand, operator);
                     textField.setText(String.valueOf(result));
-                    System.out.println("Calculation performed with operator: " + operator);
                 } catch (NumberFormatException ex) {
                     textField.setText("Error: Invalid input");
                 } catch (ArithmeticException ex) {
@@ -142,12 +134,10 @@ public class CalculatorGUI {
                     operator = command;
                     oLabel.setText(operator);
                     textField.setText("");
-                    System.out.println("Operator set to: " + operator);
                 } catch (NumberFormatException ex) {
                     textField.setText("Error: Invalid input");
                 }
             }
-            System.out.println("Resume execution...");
         }
 
         private double calculate(double firstOperand, double secondOperand, String operator) {
